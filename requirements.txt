@@ -1,5 +1,5 @@
 flask
-ddgs
+groq
 requests
 beautifulsoup4
 gunicorn

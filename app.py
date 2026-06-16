@@ -25,7 +25,7 @@ app.secret_key = "student_ai_secret"
 client = Groq(
 api_key="PASTE_YOUR_GROQ_API_KEY"
 )
-
+print(client)
 conn = get_db_connection()
 cursor = conn.cursor()
 
