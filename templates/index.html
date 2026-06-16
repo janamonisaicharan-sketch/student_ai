@@ -1,0 +1,602 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Student AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <div class="logo">
+
+        🤖 Student AI
+
+    </div>
+
+    <div class="menu">
+
+    
+<a href="/history">
+    📜 History
+</a>
+
+<a href="/quiz">
+    🧠 Quiz
+</a>
+
+<a href="/clear_chat">
+    🗑️ Clear Chat
+</a>
+
+<a href="#" onclick="toggleTheme()">
+    🌙 Theme
+</a>
+
+<a href="/notes">
+    📒 Notes
+</a>
+
+<a href="/logout">
+    🚪 Logout
+</a>
+{% if chat_history %}
+
+<div class="chat-history">
+
+    {% for chat in chat_history %}
+
+    <div class="chat-box">
+        <h3>You:</h3>
+        <p>{{ chat.question }}</p>
+
+        <h3>AI:</h3>
+        <p>{{ chat.answer }}</p>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+</div>
+<!-- MAIN -->
+
+<div class="main">
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+
+
+
+        <form
+            method="POST"
+            class="search-form"
+        >
+
+          
+
+<input
+    type="text"
+    id="question"
+    name="question"
+    placeholder="Ask anything futuristic..."
+    required
+>
+
+<button type="button" onclick="startVoice()">
+    🎤
+</button>
+
+<button type="submit">
+    Search
+</button>
+
+
+        </form>
+
+    </div>
+
+    <!-- CLOCK -->
+
+    <div class="clock-box">
+
+        <h2 id="clock">
+
+            00:00:00
+
+        </h2>
+
+        <p id="date">
+
+            Loading Date...
+
+        </p>
+
+    </div>
+
+    <!-- CHAT AREA -->
+
+    <div
+        class="chat-area"
+        id="chat-area"
+    >
+
+        <!-- AI HEADER -->
+
+    
+<div class="ai-header">
+
+<div class="stats-container">
+
+    <div class="stat-box">
+        💬 Chatbot Active
+    </div>
+
+    <div class="stat-box">
+        🧠 Learning Enabled
+    </div>
+
+    <div class="stat-box">
+        🌐 Web Search Ready
+    </div>
+
+</div>
+
+
+    <h1>
+        🚀 Future AI Assistant
+    </h1>
+
+    <div class="profile-card">
+
+        👤 Logged in as:
+        <b>{{username}}</b>
+
+    </div>
+
+</div>
+
+   
+        <!-- CHAT -->
+
+{% for item in chats|reverse %}
+
+
+<div class="chat-box">
+
+    <div class="question">
+
+        You:
+        {{ item.question }}
+
+    </div>
+
+  
+<div class="answer typing">
+
+
+<span class="ai-label">
+    AI:
+</span>
+<span
+class="ai-text typing-effect"
+
+>
+
+{{item.answer}}
+
+
+</span>
+
+
+
+
+
+
+
+</span>
+
+
+</span>
+
+
+
+<br><br>
+
+
+<button
+onclick="speakAnswer(`{{ item.answer }}`)"
+class="speak-btn"
+>
+
+🔊 Speak
+
+
+
+</a>
+
+</a>
+
+
+</a>
+
+
+<form
+    action="/save_note"
+    method="POST"
+>
+
+
+<input
+    type="hidden"
+    name="note"
+    value="{{ item.answer }}"
+>
+
+<button
+    type="submit"
+    class="save-btn"
+>
+
+    📝 Save Note
+
+</button>
+
+
+</form>
+
+
+
+
+</div>
+
+
+
+    <br>
+
+    <a
+        href="https://www.youtube.com/results?search_query={{ item.question }}"
+        target="_blank"
+        class="youtube-btn"
+    >
+        📺 Watch on YouTube
+    </a>
+
+</div>
+
+{% endfor %}
+```
+
+
+        <!-- TEACH AI -->
+
+        {% if session.get("unknown_question") %}
+
+        <div class="chat-box">
+
+            <div class="question">
+
+                Teach AI Answer
+
+            </div>
+
+            <form method="POST">
+
+                <input
+                    type="text"
+                    name="teach_answer"
+                    placeholder="Type the correct answer..."
+                    required
+
+                    style="
+                    width:100%;
+                    padding:18px;
+                    margin-top:15px;
+                    border:none;
+                    border-radius:15px;
+                    background:#1e293b;
+                    color:white;
+                    font-size:16px;
+                    "
+                >
+
+                <button
+                    type="submit"
+
+                    style="
+                    margin-top:15px;
+                    padding:15px 25px;
+                    border:none;
+                    border-radius:15px;
+                    background:cyan;
+                    color:black;
+                    font-weight:bold;
+                    cursor:pointer;
+                    "
+                >
+
+                    Teach AI
+
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endif %}
+
+        <!-- SEARCH BUTTONS -->
+
+        
+                   
+                </button>
+
+            </a>
+
+           
+
+                </button>
+
+            </a>
+
+        </div>
+
+       
+
+    </div>
+
+</div>
+
+<script>
+
+    // AUTO SCROLL
+
+    var chatArea =
+    document.getElementById(
+        "chat-area"
+    );
+
+    chatArea.scrollTop =
+    chatArea.scrollHeight;
+
+    // CLOCK
+
+    function updateClock(){
+
+        const now = new Date();
+
+        document.getElementById(
+            "clock"
+        ).innerHTML =
+        now.toLocaleTimeString();
+
+        document.getElementById(
+            "date"
+        ).innerHTML =
+        now.toDateString();
+
+    }
+
+    setInterval(updateClock, 1000);
+
+    updateClock();
+
+</script>
+
+<script>
+
+function startVoice() {
+
+    alert("Microphone button clicked!");
+
+}
+
+</script>
+
+<script>
+
+window.onload = function(){
+
+    const typingElements =
+    document.querySelectorAll(".typing-text");
+
+    typingElements.forEach((element) => {
+
+        let text =
+        element.getAttribute("data-text");
+
+        let index = 0;
+
+        function typeLetter(){
+
+            if(index < text.length){
+
+                element.innerHTML +=
+                text.charAt(index);
+
+                index++;
+
+                setTimeout(typeLetter, 20);
+
+            }
+
+        }
+
+        typeLetter();
+
+    });
+
+};
+
+</script>
+
+</body>
+
+<script>
+
+function speakAnswer(text){
+
+    // STOP IF ALREADY SPEAKING
+    if(window.speechSynthesis.speaking){
+
+        window.speechSynthesis.cancel();
+
+        return;
+
+    }
+
+    // CLEAR OLD SPEECH
+    window.speechSynthesis.cancel();
+
+    // CREATE NEW SPEECH
+    const speech =
+    new SpeechSynthesisUtterance(text);
+
+    speech.lang = "en-US";
+
+    speech.rate = 1;
+
+    speech.pitch = 1;
+
+    speech.volume = 1;
+
+    // START SPEAKING
+    window.speechSynthesis.speak(speech);
+
+}
+
+</script>
+
+
+
+
+<script>
+
+function toggleTheme(){
+
+    document.body.classList.toggle("light-mode");
+
+    if(document.body.classList.contains("light-mode")){
+
+        localStorage.setItem("theme", "light");
+
+    }else{
+
+        localStorage.setItem("theme", "dark");
+
+    }
+}
+
+window.onload = function(){
+
+    let savedTheme =
+    localStorage.getItem("theme");
+
+    if(savedTheme === "light"){
+
+        document.body.classList.add("light-mode");
+
+    }
+};
+
+</script>
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+    const elements =
+    document.querySelectorAll(
+        ".typing-effect"
+    );
+
+    elements.forEach((element) => {
+
+        let text =
+        element.textContent;
+
+        element.textContent = "";
+
+        let i = 0;
+
+        function typeLetter(){
+
+            if(i < text.length){
+
+                element.textContent +=
+                text.charAt(i);
+
+                i++;
+
+                setTimeout(
+                    typeLetter,
+                    15
+                );
+
+            }
+
+        }
+
+        typeLetter();
+
+    });
+
+});
+
+</script>
+
+
+</script>
+
+</body>
+
+</html>
+
+<script>
+
+function startVoice() {
+
+    if (!('webkitSpeechRecognition' in window)) {
+
+        alert("Voice recognition is not supported in this browser.");
+        return;
+
+    }
+
+    const recognition = new webkitSpeechRecognition();
+
+    recognition.lang = "en-US";
+
+    recognition.start();
+
+    recognition.onresult = function(event) {
+
+        document.getElementById("question").value =
+            event.results[0][0].transcript;
+
+    };
+
+}
+
+</script>
+
+
+</html>
+
+

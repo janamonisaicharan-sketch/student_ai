@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Quiz Results</title>
+
+
+<style>
+    body{
+        background:#0f172a;
+        color:white;
+        font-family:Arial;
+        padding:30px;
+    }
+
+    .card{
+        background:#1e293b;
+        padding:20px;
+        border-radius:15px;
+        margin-bottom:15px;
+    }
+
+    .correct{
+        color:lime;
+    }
+
+    .wrong{
+        color:red;
+    }
+
+    .score{
+        font-size:30px;
+        font-weight:bold;
+        color:cyan;
+        margin-bottom:30px;
+    }
+
+    button{
+        padding:15px 25px;
+        border:none;
+        border-radius:10px;
+        background:cyan;
+        font-weight:bold;
+        cursor:pointer;
+    }
+</style>
+
+
+</head>
+
+<body>
+
+
+<h1>Quiz Results</h1>
+
+<div class="score">
+    Score: {{ score }}/{{ total }}
+</div>
+
+{% for r in results %}
+
+<div class="card">
+
+    <h3>{{ r.question }}</h3>
+
+    <p>
+        Your Answer:
+        <span class="wrong">
+            {{ r.user_answer }}
+        </span>
+    </p>
+
+    <p>
+        Correct Answer:
+        <span class="correct">
+            {{ r.correct_answer }}
+        </span>
+    </p>
+
+</div>
+
+{% endfor %}
+
+<a href="/quiz">
+    <button>Play Again</button>
+</a>
+<a href="/chat">
+
+
+<button
+    style="
+    margin-top:15px;
+    padding:15px 25px;
+    border:none;
+    border-radius:15px;
+    background:cyan;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+    "
+>
+
+    🏠 Home
+
+</button>
+
+
+</a>
+
+
+</body>
+</html>

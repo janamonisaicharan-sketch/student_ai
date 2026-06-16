@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+```
+<title>Saved Notes</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+>
+```
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+```
+<div class="logo">
+
+    🤖 Student AI
+
+</div>
+
+<div class="menu">
+
+    <a href="/chat">
+
+        💬 Chat
+
+    </a>
+
+    <a href="/history">
+
+        📜 History
+
+    </a>
+
+    <a href="/quiz">
+
+        🧠 Quiz
+
+    </a>
+
+    <a href="/logout">
+
+        🚪 Logout
+
+    </a>
+
+</div>
+```
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+```
+<h1 style="color:cyan;">
+
+    📒 Saved Notes
+
+</h1>
+
+<br>
+
+<a href="/chat">
+
+    <button class="save-btn">
+
+        🏠 Home
+
+    </button>
+
+</a>
+
+<br><br>
+
+{% for note in notes %}
+
+<div class="chat-box">
+
+    <div class="answer">
+
+        {{ note.note }}
+
+    </div>
+
+    <br>
+
+    
+
+    </a>
+
+</div>
+
+<br>
+
+{% endfor %}
+```
+
+</div>
+
+</body>
+
+</html>
