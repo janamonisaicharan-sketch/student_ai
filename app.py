@@ -1,10 +1,9 @@
 
+import os
 from groq import Groq
-
+from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, session
 
-import requests
-from bs4 import BeautifulSoup
 
 import random
 
@@ -22,10 +21,10 @@ def get_db_connection():
     return conn
 app = Flask(__name__)
 app.secret_key = "student_ai_secret"
+load_dotenv()
 client = Groq(
-api_key="PASTE_YOUR_GROQ_API_KEY"
+    api_key=os.getenv("GROQ_API_KEY")
 )
-print(client)
 conn = get_db_connection()
 cursor = conn.cursor()
 
