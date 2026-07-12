@@ -1,110 +1,227 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
 
-```
-<title>Chat History</title>
+    <meta charset="UTF-8">
 
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}"
->
-```
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        Student AI | History
+
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
+<div class="app-container">
 
-<div class="sidebar">
+    <!-- SIDEBAR -->
 
-```
-<div class="logo">
+    <aside class="sidebar">
 
-    🤖 Student AI
+        <div class="logo">
 
-</div>
+            🤖 Student AI
 
-<div class="menu">
+        </div>
 
-    <a href="/chat">
-        💬 Chat
-    </a>
+        <nav class="menu">
 
-    <a href="/quiz">
-        🧠 Quiz
-    </a>
+            <a href="/chat">
 
-    <a href="/notes">
-        📒 Notes
-    </a>
+                💬 Chat
 
-    <a href="/logout">
-        🚪 Logout
-    </a>
+            </a>
 
-</div>
-```
+            <a href="/history" class="active">
 
-</div>
+                📜 History
 
-<!-- MAIN -->
+            </a>
 
-<div class="main">
+            <a href="/quiz">
 
-```
-<h1 style="color:cyan;">
+                🧠 Quiz
 
-    📜 Chat History
+            </a>
+            <a href="/leaderboard">
 
-</h1>
+                🏆 Leaderboard
 
-<br>
+            </a>
+            <a href="/notes">
 
+                📒 Notes
 
-<a href="/chat">
+            </a>
 
-    <button class="save-btn">
+            <a href="/clear_chat">
 
-        🏠 Home
+                🗑 Clear Chat
 
-    </button>
+            </a>
 
-</a>
+            <a href="/logout">
 
-<br><br>
+                🚪 Logout
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <header class="top-header">
+
+            <div>
+
+                <h1>
+
+                    📜 Chat History
+
+                </h1>
+
+                <p>
+
+                    Review all your previous conversations.
+
+                </p>
+
+            </div>
+
+            <a href="/chat">
+
+                <button class="save-btn">
+
+                    🏠 Back to Chat
+
+                </button>
+
+            </a>
+
+        </header>
+
+        <section class="chat-area">
+        {% if history %}
+
+<div class="history-container">
 
 {% for item in history %}
 
-<div class="chat-box">
+<div class="chat-card">
 
-    <div class="question">
+    <!-- USER MESSAGE -->
 
-        You:
-        {{ item.question }}
+    <div class="chat-message user-chat">
+
+        <div class="chat-avatar">
+
+            👤
+
+        </div>
+
+        <div class="chat-content">
+
+            <div class="chat-title">
+
+                You
+
+            </div>
+
+            <div class="chat-text">
+
+                {{ item.question }}
+
+            </div>
+
+        </div>
 
     </div>
 
-    <br>
+    <!-- AI MESSAGE -->
 
-    <div class="answer">
+    <div class="chat-message ai-chat">
 
-        AI:
-        {{ item.answer }}
+        <div class="chat-avatar ai-avatar">
+
+            🤖
+
+        </div>
+
+        <div class="chat-content">
+
+            <div class="chat-title">
+
+                Student AI
+
+            </div>
+
+            <div class="chat-text">
+
+                {{ item.answer }}
+
+            </div>
+
+        </div>
 
     </div>
 
 </div>
-
-<br>
 
 {% endfor %}
-```
+,,,
+</div>
+
+{% else %}
+
+<div class="empty-history">
+
+    <h2>
+
+        📜 No Chat History Yet
+
+    </h2>
+
+    <p>
+
+        Start chatting with Student AI and your conversations will appear here.
+
+    </p>
+
+    <a href="/chat">
+
+        <button class="search-btn">
+
+            💬 Start Chatting
+
+        </button>
+
+    </a>
 
 </div>
+
+{% endif %}
+        </section>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 

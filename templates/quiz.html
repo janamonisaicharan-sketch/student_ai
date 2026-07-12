@@ -1,182 +1,191 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-    <title>Quiz</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        Student AI | Quiz
+
+    </title>
 
     <link
         rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
-
-    <style>
-
-        .quiz-box{
-
-            width:700px;
-
-            margin:auto;
-
-            margin-top:80px;
-
-            background:#111827;
-
-            padding:40px;
-
-            border-radius:25px;
-
-            border:2px solid cyan;
-
-            box-shadow:0 0 25px rgba(0,255,255,0.2);
-
-        }
-
-        .quiz-box h1{
-
-            color:cyan;
-
-            margin-bottom:25px;
-
-            text-align:center;
-
-        }
-
-        .question{
-
-            font-size:22px;
-
-            margin-bottom:25px;
-
-        }
-.option{
-
-    display:block;
-
-    width:100%;
-
-    background:#1e293b;
-
-    padding:15px;
-
-    margin:10px 0;
-
-    border-radius:15px;
-
-    font-size:18px;
-
-    cursor:pointer;
-
-}
-
-.option input{
-
-    margin-right:10px;
-
-}
-        
-    </style>
+        href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
 <body>
 
-<div class="sidebar">
+<div class="app-container">
 
-    <div class="logo">
+    <!-- SIDEBAR -->
 
-        🤖 Student AI
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            🤖 Student AI
+
+        </div>
+
+        <nav class="menu">
+
+            <a href="/chat">
+
+                💬 Chat
+
+            </a>
+
+            <a href="/history">
+
+                📜 History
+
+            </a>
+
+            <a href="/notes">
+
+                📒 Notes
+
+            </a>
+
+            <a href="/quiz" class="active">
+
+                🧠 Quiz
+
+            </a>
+            <a href="/leaderboard">
+
+                🏆 Leaderboard
+
+            </a>
+            <a href="/clear_chat">
+
+                🗑 Clear Chat
+
+            </a>
+
+            <a href="/logout">
+
+                🚪 Logout
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <header class="top-header">
+
+            <div>
+
+                <h1>
+
+                    🧠 Student AI Quiz
+
+                </h1>
+
+                <p>
+
+                    Test your knowledge with AI-powered questions.
+
+                </p>
+
+            </div>
+
+            <a href="/chat">
+
+                <button class="save-btn">
+
+                    🏠 Back to Chat
+
+                </button>
+
+            </a>
+
+        </header>
+
+        <form
+            action="/submit_quiz"
+            method="POST">
+
+        <div class="quiz-container">
+        {% for q in questions %}
+
+{% set qnum = loop.index %}
+
+<div class="quiz-card">
+
+    <div class="quiz-number">
+
+        Question {{ qnum }}
 
     </div>
 
-    <div class="menu">
+    <h2 class="quiz-question">
 
-        <a href="/chat">
+        {{ q.question }}
 
-            💬 Chat
+    </h2>
 
-        </a>
+    <div class="quiz-options">
 
-        <a href="/history">
+        {% for option in q.options %}
 
-            📜 History
-
-        </a>
-
-        <a href="/logout">
-
-            🚪 Logout
-
-        </a>
-
-    </div>
-
-</div>
-
-<div class="main">
-
-    <div class="quiz-box">
-
-        <h1>
-
-            🧠 AI Quiz System
-
-        </h1>
-
-<form action="/submit_quiz" method="POST">
-{% for q in questions %}
-
-    {% set qnum = loop.index %}
-
-    <div class="question">
-
-        {{ qnum }}. {{ q.question }}
-
-    </div>
-
-    {% for option in q.options %}
-
-        <label class="option">
+        <label class="quiz-option">
 
             <input
                 type="radio"
                 name="q{{ qnum }}"
                 value="{{ option }}"
-                required
-            >
+                required>
 
-            {{ option }}
+            <span>
+
+                {{ option }}
+
+            </span>
 
         </label>
 
-    {% endfor %}
+        {% endfor %}
 
-    <br>
+    </div>
+
+</div>
 
 {% endfor %}
 
-<button
-    type="submit"
-    style="
-    padding:15px 25px;
-    border:none;
-    border-radius:15px;
-    background:cyan;
-    font-weight:bold;
-    cursor:pointer;
-    "
->
+<div class="quiz-submit">
 
-    Submit Quiz
+    <button
+        type="submit"
+        class="search-btn">
 
-</button>
+        🚀 Submit Quiz
 
-</form>
+    </button>
 
+</div>
+        </div>
 
+        </form>
 
-    </div>
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 

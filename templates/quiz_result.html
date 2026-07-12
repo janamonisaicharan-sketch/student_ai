@@ -1,112 +1,212 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
 <head>
-    <title>Quiz Results</title>
 
+    <meta charset="UTF-8">
 
-<style>
-    body{
-        background:#0f172a;
-        color:white;
-        font-family:Arial;
-        padding:30px;
-    }
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    .card{
-        background:#1e293b;
-        padding:20px;
-        border-radius:15px;
-        margin-bottom:15px;
-    }
+    <title>
 
-    .correct{
-        color:lime;
-    }
+        Student AI | Quiz Result
 
-    .wrong{
-        color:red;
-    }
+    </title>
 
-    .score{
-        font-size:30px;
-        font-weight:bold;
-        color:cyan;
-        margin-bottom:30px;
-    }
-
-    button{
-        padding:15px 25px;
-        border:none;
-        border-radius:10px;
-        background:cyan;
-        font-weight:bold;
-        cursor:pointer;
-    }
-</style>
-
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
 <body>
 
+<div class="app-container">
 
-<h1>Quiz Results</h1>
+    <!-- SIDEBAR -->
 
-<div class="score">
-    Score: {{ score }}/{{ total }}
-</div>
+    <aside class="sidebar">
 
-{% for r in results %}
+        <div class="logo">
 
-<div class="card">
+            🤖 Student AI
 
-    <h3>{{ r.question }}</h3>
+        </div>
 
-    <p>
-        Your Answer:
-        <span class="wrong">
-            {{ r.user_answer }}
-        </span>
-    </p>
+        <nav class="menu">
 
-    <p>
-        Correct Answer:
-        <span class="correct">
+            <a href="/chat">
+
+                💬 Chat
+
+            </a>
+
+            <a href="/history">
+
+                📜 History
+
+            </a>
+
+            <a href="/notes">
+
+                📒 Notes
+
+            </a>
+
+            <a href="/quiz" class="active">
+
+                🧠 Quiz
+
+            </a>
+            <a href="/leaderboard">
+
+                🏆 Leaderboard
+
+            </a>
+            <a href="/logout">
+
+                🚪 Logout
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <header class="top-header">
+
+            <div>
+
+                <h1>
+
+                    🎉 Quiz Results
+
+                </h1>
+
+                <p>
+
+                    Here's how you performed.
+
+                </p>
+
+            </div>
+
+            <a href="/chat">
+
+                <button class="save-btn">
+
+                    🏠 Back to Chat
+
+                </button>
+
+            </a>
+
+        </header>
+
+        <div class="result-card">
+
+            <h2>
+
+                Your Score
+
+            </h2>
+
+            <div class="score-circle">
+
+                {{ score }}/{{ total }}
+
+            </div>
+
+        </div>
+
+        <div class="result-list">
+        {% for r in results %}
+
+<div class="result-item">
+
+    <div class="result-question">
+
+        <h3>
+
+            {{ loop.index }}. {{ r.question }}
+
+        </h3>
+
+    </div>
+
+    <div class="result-answer user-answer">
+
+        <strong>
+
+            Your Answer
+
+        </strong>
+
+        <p>
+
+            {{ r.user_answer if r.user_answer else "Not Answered" }}
+
+        </p>
+
+    </div>
+
+    <div class="result-answer correct-answer">
+
+        <strong>
+
+            Correct Answer
+
+        </strong>
+
+        <p>
+
             {{ r.correct_answer }}
-        </span>
-    </p>
+
+        </p>
+
+    </div>
 
 </div>
 
 {% endfor %}
 
-<a href="/quiz">
-    <button>Play Again</button>
-</a>
-<a href="/chat">
+<div class="result-buttons">
 
+    <a href="/quiz">
 
-<button
-    style="
-    margin-top:15px;
-    padding:15px 25px;
-    border:none;
-    border-radius:15px;
-    background:cyan;
-    color:black;
-    font-weight:bold;
-    cursor:pointer;
-    "
->
+        <button class="search-btn">
 
-    🏠 Home
+            🔄 Play Again
 
-</button>
+        </button>
 
+    </a>
 
-</a>
+    <a href="/chat">
 
+        <button class="save-btn">
+
+            🏠 Back to Chat
+
+        </button>
+
+    </a>
+
+</div>
+        </div>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
+
 </html>

@@ -1,113 +1,194 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
 
-```
-<title>Saved Notes</title>
+    <meta charset="UTF-8">
 
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}"
->
-```
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        Student AI | Notes
+
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
+<div class="app-container">
 
-<div class="sidebar">
+    <!-- SIDEBAR -->
 
-```
-<div class="logo">
+    <aside class="sidebar">
 
-    🤖 Student AI
+        <div class="logo">
 
-</div>
+            🤖 Student AI
 
-<div class="menu">
+        </div>
 
-    <a href="/chat">
+        <nav class="menu">
 
-        💬 Chat
+            <a href="/chat">
 
-    </a>
+                💬 Chat
 
-    <a href="/history">
+            </a>
 
-        📜 History
+            <a href="/history">
 
-    </a>
+                📜 History
 
-    <a href="/quiz">
+            </a>
 
-        🧠 Quiz
+            <a href="/notes" class="active">
 
-    </a>
+                📒 Notes
 
-    <a href="/logout">
+            </a>
 
-        🚪 Logout
+            <a href="/quiz">
 
-    </a>
+                🧠 Quiz
 
-</div>
-```
+            </a>
+            <a href="/leaderboard">
 
-</div>
+                🏆 Leaderboard
 
-<!-- MAIN -->
+            </a>
+            <a href="/clear_chat">
 
-<div class="main">
+                🗑 Clear Chat
 
-```
-<h1 style="color:cyan;">
+            </a>
 
-    📒 Saved Notes
+            <a href="/logout">
 
-</h1>
+                🚪 Logout
 
-<br>
+            </a>
 
-<a href="/chat">
+        </nav>
 
-    <button class="save-btn">
+    </aside>
 
-        🏠 Home
+    <!-- MAIN -->
 
-    </button>
+    <main class="main-content">
 
-</a>
+        <header class="top-header">
 
-<br><br>
+            <div>
+
+                <h1>
+
+                    📒 Saved Notes
+
+                </h1>
+
+                <p>
+
+                    Review everything you've saved while learning.
+
+                </p>
+
+            </div>
+
+            <a href="/chat">
+
+                <button class="save-btn">
+
+                    🏠 Back to Chat
+
+                </button>
+
+            </a>
+
+        </header>
+
+        <section class="history-container">
+        {% if notes %}
 
 {% for note in notes %}
 
-<div class="chat-box">
+<div class="chat-card">
 
-    <div class="answer">
+    <div class="chat-message ai-chat">
 
-        {{ note.note }}
+        <div class="chat-avatar ai-avatar">
+
+            📒
+
+        </div>
+
+        <div class="chat-content">
+
+            <div class="chat-title">
+
+                Saved Note
+
+            </div>
+
+            <div class="chat-text">
+
+                {{ note.note }}
+
+            </div>
+
+        </div>
 
     </div>
 
-    <br>
+</div>
 
-    
+{% endfor %}
+
+{% else %}
+
+<div class="empty-history">
+
+    <h2>
+
+        📒 No Notes Saved
+
+    </h2>
+
+    <p>
+
+        Whenever you click the <strong>📝 Save</strong> button in the chat,
+        your notes will appear here.
+
+    </p>
+
+    <a href="/chat">
+
+        <button class="search-btn">
+
+            💬 Go to Chat
+
+        </button>
 
     </a>
 
 </div>
 
-<br>
+{% endif %}
+        </section>
 
-{% endfor %}
-```
+    </main>
 
 </div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 

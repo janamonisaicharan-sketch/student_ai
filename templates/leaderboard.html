@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student AI | Leaderboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            🤖 Student AI
+
+        </div>
+
+        <nav class="menu">
+
+            <a href="/chat">
+
+                💬 Chat
+
+            </a>
+
+            <a href="/history">
+
+                📜 History
+
+            </a>
+
+            <a href="/notes">
+
+                📒 Notes
+
+            </a>
+
+            <a href="/quiz">
+
+                🧠 Quiz
+
+            </a>
+
+            <a href="/leaderboard" class="active">
+
+                🏆 Leaderboard
+
+            </a>
+
+            <a href="/logout">
+
+                🚪 Logout
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="main-content">
+
+        <header class="top-header">
+
+            <div>
+
+                <h1>
+
+                    🏆 Leaderboard
+
+                </h1>
+
+                <p>
+
+                    Top Quiz Scores
+
+                </p>
+
+            </div>
+
+            <a href="/chat">
+
+                <button class="save-btn">
+
+                    🏠 Back to Chat
+
+                </button>
+
+            </a>
+
+        </header>
+
+        <div class="leaderboard-container">
+
+            <table class="leaderboard-table">
+
+                <tr>
+
+                    <th>Rank</th>
+
+                    <th>Student</th>
+
+                    <th>Score</th>
+
+                </tr>
+
+                {% for user in scores %}
+
+                <tr>
+
+                    <td>
+
+                        {{ loop.index }}
+
+                    </td>
+
+                    <td>
+
+                        {{ user.username }}
+
+                    </td>
+
+                    <td>
+
+                        {{ user.score }}/{{ user.total }}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
