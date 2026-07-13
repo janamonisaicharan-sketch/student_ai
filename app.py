@@ -25,6 +25,7 @@ load_dotenv()
 client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
 )
+
 conn = get_db_connection()
 cursor = conn.cursor()
 

@@ -1,173 +1,371 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-    <title>Signup</title>
+<meta charset="UTF-8">
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    <style>
+<title>Student AI | Create Account</title>
 
-        .center-box{
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
 
-            width:400px;
+<style>
 
-            margin:auto;
+*{
 
-            margin-top:120px;
+margin:0;
 
-            background:rgba(15,23,42,0.95);
+padding:0;
 
-            padding:40px;
+box-sizing:border-box;
 
-            border-radius:25px;
+font-family:Arial,Helvetica,sans-serif;
 
-            border:2px solid cyan;
+}
 
-            box-shadow:0 0 30px rgba(0,255,255,0.3);
+body{
 
-            animation:fadeIn 0.5s ease;
+background:#050B16;
 
-        }
+height:100vh;
 
-        .center-box h1{
+display:flex;
 
-            text-align:center;
+justify-content:center;
 
-            color:cyan;
+align-items:center;
 
-            margin-bottom:30px;
+color:white;
 
-            text-shadow:0 0 15px cyan;
+}
 
-        }
+.signup-container{
 
-        .center-box input{
+width:1000px;
 
-            width:100%;
+max-width:95%;
 
-            padding:18px;
+background:#111B30;
 
-            margin-bottom:20px;
+border:1px solid rgba(0,229,255,.5);
 
-            border:none;
+border-radius:25px;
 
-            border-radius:15px;
+display:grid;
 
-            background:#1e293b;
+grid-template-columns:1fr 1fr;
 
-            color:white;
+overflow:hidden;
 
-            font-size:16px;
+box-shadow:0 0 25px rgba(0,229,255,.15);
 
-        }
+}
 
-        .center-box button{
+.left{
 
-            width:100%;
+padding:60px;
 
-            padding:18px;
+display:flex;
 
-            border:none;
+flex-direction:column;
 
-            border-radius:15px;
+justify-content:center;
 
-            background:cyan;
+background:linear-gradient(135deg,#111B30,#0C1528);
 
-            color:black;
+}
 
-            font-weight:bold;
+.left h1{
 
-            cursor:pointer;
+font-size:42px;
 
-            transition:0.3s;
+color:cyan;
 
-        }
+margin-bottom:15px;
 
-        .center-box button:hover{
+}
 
-            transform:scale(1.03);
+.left p{
 
-            box-shadow:0 0 20px cyan;
+font-size:18px;
 
-        }
+line-height:1.8;
 
-        .center-box p{
+color:#d5e8ff;
 
-            text-align:center;
+}
 
-            margin-top:20px;
+.right{
 
-        }
+padding:60px;
 
-        .center-box a{
+display:flex;
 
-            color:cyan;
+flex-direction:column;
 
-            text-decoration:none;
+justify-content:center;
 
-        }
+}
 
-    </style>
+.right h2{
+
+font-size:34px;
+
+margin-bottom:30px;
+
+}
+
+.input-group{
+
+margin-bottom:22px;
+
+}
+
+.input-group label{
+
+display:block;
+
+margin-bottom:8px;
+
+font-size:15px;
+
+color:#d5e8ff;
+
+}
+
+.input-group input{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:#1A2946;
+
+color:white;
+
+font-size:16px;
+
+outline:none;
+
+transition:.3s;
+
+}
+
+.input-group input:focus{
+
+box-shadow:0 0 10px rgba(0,255,255,.35);
+
+}
+
+input:-webkit-autofill{
+
+-webkit-box-shadow:0 0 0 1000px #1A2946 inset !important;
+
+-webkit-text-fill-color:white !important;
+
+}
+
+.signup-btn{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:cyan;
+
+color:black;
+
+font-size:17px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.signup-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:0 0 15px cyan;
+
+}
+
+.login-text{
+
+margin-top:20px;
+
+text-align:center;
+
+color:#d5e8ff;
+
+}
+
+.login-text a{
+
+color:cyan;
+
+text-decoration:none;
+
+font-weight:bold;
+
+}
+
+.login-text a:hover{
+
+text-decoration:underline;
+
+}
+
+.error{
+
+background:rgba(255,0,0,.12);
+
+border:1px solid rgba(255,0,0,.4);
+
+padding:12px;
+
+border-radius:10px;
+
+margin-bottom:20px;
+
+color:#ff8a8a;
+
+}
+
+@media(max-width:850px){
+
+.signup-container{
+
+grid-template-columns:1fr;
+
+}
+
+.left{
+
+padding:40px;
+
+text-align:center;
+
+}
+
+.right{
+
+padding:40px;
+
+}
+
+.left h1{
+
+font-size:38px;
+
+}
+
+}
+
+</style>
 
 </head>
 
 <body>
 
-<div class="center-box">
+<div class="signup-container">
 
-    <h1>
+<div class="left">
 
-        🚀 Create Account
+<h1>🤖 Student AI</h1>
 
-    </h1>
+<p>
+
+Learn • Ask • Explore • Grow
+
+<br><br>
+
+Create your free Student AI account and start learning smarter every day.
+
+</p>
+
+</div>
+
+<div class="right">
+
+<h2>Create Account</h2>
+
 {% if error %}
-<p style="color:red;">{{ error }}</p>
+
+<div class="error">
+
+{{ error }}
+
+</div>
+
 {% endif %}
-    <form method="POST">
 
-        <input
-            type="text"
-            name="username"
-            placeholder="Create Username"
-            required
-        >
+<form method="POST">
+<div class="input-group">
 
-        <input
-            type="password"
-            name="password"
-            placeholder="Create Password"
-            required
-        >
+<label>Username</label>
 
-        <button type="submit">
+<input
+type="text"
+name="username"
+placeholder="Create a username"
+required>
 
-            Signup
+</div>
 
-        </button>
+<div class="input-group">
 
-    </form>
+<label>Password</label>
 
-    <p>
+<input
+type="password"
+name="password"
+placeholder="Create a password"
+required>
 
-        Already have an account?
+</div>
 
-        <a href="/">
+<button
+type="submit"
+class="signup-btn">
 
-            Login
+Create Account
 
-        </a>
+</button>
 
-    </p>
+</form>
+
+<p class="login-text">
+
+Already have an account?
+
+<a href="/">
+
+Sign In
+
+</a>
+
+</p>
+
+</div>
 
 </div>
 
 </body>
 
 </html>
-

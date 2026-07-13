@@ -1,171 +1,335 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-    <title>Login</title>
+<meta charset="UTF-8">
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
+<title>Student AI | Login</title>
 
-        .center-box{
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
 
-            width:400px;
+<style>
 
-            margin:auto;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
 
-            margin-top:120px;
+body{
 
-            background:rgba(15,23,42,0.95);
+background:#050B16;
 
-            padding:40px;
+height:100vh;
 
-            border-radius:25px;
+display:flex;
 
-            border:2px solid cyan;
+justify-content:center;
 
-            box-shadow:0 0 30px rgba(0,255,255,0.3);
+align-items:center;
 
-            animation:fadeIn 0.5s ease;
+color:white;
 
-        }
+}
 
-        .center-box h1{
+.login-container{
 
-            text-align:center;
+width:1000px;
 
-            color:cyan;
+max-width:95%;
 
-            margin-bottom:30px;
+background:#111B30;
 
-            text-shadow:0 0 15px cyan;
+border:1px solid rgba(0,229,255,.5);
 
-        }
+border-radius:25px;
 
-        .center-box input{
+display:grid;
 
-            width:100%;
+grid-template-columns:1fr 1fr;
 
-            padding:18px;
+overflow:hidden;
 
-            margin-bottom:20px;
+box-shadow:0 0 30px rgba(0,255,255,.15);
 
-            border:none;
+}
 
-            border-radius:15px;
+.left{
 
-            background:#1e293b;
+padding:60px;
 
-            color:white;
+display:flex;
 
-            font-size:16px;
+flex-direction:column;
 
-        }
+justify-content:center;
 
-        .center-box button{
+background:linear-gradient(135deg,#111B30,#0C1528);
 
-            width:100%;
+}
 
-            padding:18px;
+.left h1{
 
-            border:none;
+font-size:42px;
 
-            border-radius:15px;
+font-weight:700;
 
-            background:cyan;
+color:cyan;
 
-            color:black;
+margin-bottom:15px;
 
-            font-weight:bold;
+}
 
-            cursor:pointer;
+.left p{
 
-            transition:0.3s;
+font-size:18px;
 
-        }
+color:#d5e8ff;
 
-        .center-box button:hover{
+line-height:1.8;
 
-            transform:scale(1.03);
+}
 
-            box-shadow:0 0 20px cyan;
+.right{
 
-        }
+padding:60px;
 
-        .center-box p{
+display:flex;
 
-            text-align:center;
+flex-direction:column;
 
-            margin-top:20px;
+justify-content:center;
 
-        }
+}
 
-        .center-box a{
+.right h2{
 
-            color:cyan;
+font-size:34px;
 
-            text-decoration:none;
+margin-bottom:30px;
 
-        }
+color:white;
 
-    </style>
+}
+.input-group{
+
+margin-bottom:22px;
+
+}
+
+.input-group label{
+
+display:block;
+
+margin-bottom:8px;
+
+font-size:15px;
+
+color:#d5e8ff;
+
+}
+
+.input-group input{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:#1a2744;
+
+color:white;
+
+font-size:16px;
+
+outline:none;
+
+transition:.3s;
+
+}
+
+.input-group input:focus{
+
+box-shadow:0 0 10px rgba(0,255,255,.4);
+
+}
+
+.login-btn{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:cyan;
+
+color:black;
+
+font-size:17px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.login-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:0 0 15px cyan;
+
+}
+
+.signup-text{
+
+margin-top:20px;
+
+text-align:center;
+
+color:#d5e8ff;
+
+}
+
+.signup-text a{
+
+color:cyan;
+
+text-decoration:none;
+
+font-weight:bold;
+
+}
+
+.signup-text a:hover{
+
+text-decoration:underline;
+
+}
+
+@media(max-width:850px){
+
+.login-container{
+
+grid-template-columns:1fr;
+
+}
+
+.left{
+
+padding:40px;
+
+text-align:center;
+
+}
+
+.right{
+
+padding:40px;
+
+}
+
+.left h1{
+
+font-size:38px;
+
+}
+
+}
+
+</style>
 
 </head>
 
 <body>
 
-<div class="center-box">
+<div class="login-container">
 
-    <h1>
+<div class="left">
 
-        🤖 Student AI Login
+<h1>🤖 Student AI</h1>
 
-    </h1>
+<p>
 
-    <form method="POST">
+Learn • Ask • Explore • Grow
 
-        <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            required
-        >
+<br><br>
 
-        <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-        >
+Welcome back! Continue your learning journey with Student AI.
 
-        <button type="submit">
+</p>
 
-            Login
+</div>
 
-        </button>
+<div class="right">
 
-    </form>
+<h2>Login</h2>
 
-    <p>
+<form method="POST">
 
-        Don't have an account?
+<div class="input-group">
 
-        <a href="/signup">
+<label>Username</label>
 
-            Signup
+<input
+type="text"
+name="username"
+placeholder="Enter your username"
+required>
 
-        </a>
+</div>
 
-    </p>
+<div class="input-group">
+
+<label>Password</label>
+
+<input
+type="password"
+name="password"
+placeholder="Enter your password"
+required>
+
+</div>
+
+<button
+type="submit"
+class="login-btn">
+
+Login
+
+</button>
+
+</form>
+
+<p class="signup-text">
+
+Don't have an account?
+
+<a href="/signup">
+
+Create Account
+
+</a>
+
+</p>
+
+</div>
 
 </div>
 
 </body>
 
 </html>
-
