@@ -3,8 +3,11 @@ import os
 from groq import Groq
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, session
-
-
+from utils.context_builder import build_context
+from werkzeug.utils import secure_filename
+from documents.manager import save_document
+from utils.pdf_reader import extract_pdf_text
+from documents.manager import get_document
 import random
 
 import json
@@ -20,6 +23,12 @@ def get_db_connection():
 
     return conn
 app = Flask(__name__)
+UPLOAD_FOLDER = "uploads/pdfs"
+
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 app.secret_key = "student_ai_secret"
 load_dotenv()
 client = Groq(
@@ -168,7 +177,6 @@ def signup():
 @app.route("/chat", methods=["GET", "POST"])
 def chat():
 
-
     if "username" not in session:
         return redirect("/")
 
@@ -177,7 +185,6 @@ def chat():
     if request.method == "POST":
 
         question = request.form["question"]
-
         lower_question = question.lower()
 
         answer = ""
@@ -223,24 +230,54 @@ def chat():
 
             else:
 
+                # CHECK FOR UPLOADED PDF
+
+                document = get_document(session["username"])
+
+                system_prompt = (
+                    "You are Madhix AI, an intelligent AI assistant for students. "
+                    "If an uploaded PDF is provided, answer using that document first. "
+                    "If the answer is not available in the document, clearly mention that "
+                    "and then answer using your own knowledge."
+                )
+
+                user_prompt = question
+
+                if document:
+
+                    user_prompt = f"""
+Uploaded PDF:
+{document['filename']}
+
+Document Content:
+
+{document['text']}
+
+----------------------------------------
+
+Student Question:
+
+{question}
+"""
+
                 # GROQ AI
 
                 try:
 
                     response = client.chat.completions.create(
 
-                       model="llama-3.1-8b-instant",
+                        model="llama-3.1-8b-instant",
 
                         messages=[
 
                             {
                                 "role": "system",
-                                "content": "You are a futuristic AI assistant for students."
+                                "content": system_prompt
                             },
 
                             {
                                 "role": "user",
-                                "content": question
+                                "content": user_prompt
                             }
 
                         ]
@@ -256,10 +293,7 @@ def chat():
 
                 except Exception as e:
 
-                    answer = (
-                        "❌ AI Error: "
-                        + str(e)
-                    )
+                    answer = "❌ AI Error: " + str(e)
 
         # SAVE CHAT
 
@@ -271,37 +305,37 @@ def chat():
         })
 
         session["current_chat"] = current_chat
+
         conn = get_db_connection()
 
         cursor = conn.cursor()
 
         cursor.execute(
-        """
-        INSERT INTO history
-        (user, question, answer)
-        VALUES (?, ?, ?)
-        """,
-        (
-        session["username"],
-        question,
-        answer
-        )
+            """
+            INSERT INTO history
+            (user, question, answer)
+            VALUES (?, ?, ?)
+            """,
+            (
+                session["username"],
+                question,
+                answer
+            )
         )
 
         conn.commit()
 
         conn.close()
 
-
-
-
         session.modified = True
+        session.pop("pdf_uploaded", None)
 
     return render_template(
         "index.html",
         chats=current_chat,
         username=session["username"]
     )
+
 @app.route("/notes")
 def notes():
 
@@ -514,7 +548,64 @@ def clear_chat():
     session["current_chat"] = []
 
     return redirect("/chat")
+# -----------------------------------
+# PDF READER
+# -----------------------------------
+@app.route("/upload_pdf", methods=["POST"])
+def upload_pdf():
 
+    if "username" not in session:
+        return redirect("/chat")
+
+    if "pdf" not in request.files:
+        return redirect("/chat")
+
+    file = request.files["pdf"]
+
+    if file.filename == "":
+        return redirect("/chat")
+
+    filename = secure_filename(file.filename)
+
+    filepath = os.path.join(
+        app.config["UPLOAD_FOLDER"],
+        filename
+    )
+
+    file.save(filepath)
+
+    pdf_text = extract_pdf_text(filepath)
+
+    save_document(
+        session["username"],
+        filename,
+        pdf_text
+    )
+
+    current_chat = session.get("current_chat", [])
+
+    current_chat.append({
+
+        "question": "📚 Study Material",
+
+        "answer": f"""
+    I have successfully added **{filename}** to this conversation.
+
+    You can now ask me to:
+
+    • Explain any topic
+    • Summarize chapters
+    • Generate notes
+    • Create quizzes
+    • Find formulas
+    • Answer questions from this PDF
+    """
+
+    })
+
+    session["current_chat"] = current_chat
+
+    return redirect("/chat")
 # -----------------------------------
 # RUN APP
 # -----------------------------------

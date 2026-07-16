@@ -356,6 +356,49 @@
 
         <section class="search-section">
 
+        
+
+<div class="upload-toolbar">
+
+    <!-- PDF Upload -->
+
+    <form
+        action="/upload_pdf"
+        method="POST"
+        enctype="multipart/form-data"
+        id="pdfForm">
+
+        <input
+            type="file"
+            id="pdfInput"
+            name="pdf"
+            accept=".pdf"
+            hidden
+            onchange="document.getElementById('pdfForm').submit()">
+
+        <button
+            type="button"
+            class="upload-btn"
+            onclick="document.getElementById('pdfInput').click()">
+
+            📚 Study Material
+
+        </button>
+
+    </form>
+
+
+    <!-- Image Upload -->
+
+    <button
+        class="upload-btn"
+        disabled>
+
+        🚀 Coming Soon
+
+    </button>
+
+</div>
             <form
                 method="POST"
                 class="search-form">
